@@ -101,72 +101,98 @@
       position: fixed; inset: 0; z-index: 1;
       overflow: hidden; pointer-events: none;
     }
+
+    /* flower-unit: flex column → bloom di atas, stem di bawah, tersambung rapi */
     .flower-unit {
       position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       transform-origin: bottom center;
-      animation: riseUp var(--rise, 3s) var(--rd, 0s) cubic-bezier(.16,1,.3,1) forwards;
-      bottom: -350px; opacity: 0;
+      animation:
+        riseUp var(--rise, 3s) var(--rd, 0s) cubic-bezier(.16,1,.3,1) forwards,
+        sway   var(--swt, 6s)  var(--swd, 0s) ease-in-out infinite alternate;
+      bottom: -400px; opacity: 0;
     }
     @keyframes riseUp {
-      0%  { bottom: -350px; opacity: 0; transform: scaleX(.8); }
+      0%  { bottom: -400px; opacity: 0; }
       15% { opacity: 1; }
-      100%{ bottom: var(--bottom, 60px); opacity: 1; transform: scaleX(1); }
-    }
-    .stem {
-      width: var(--sw2, 3px); height: var(--sh, 180px);
-      background: linear-gradient(to top, #1a4828, #5adba8);
-      margin: 0 auto; border-radius: 6px 6px 3px 3px;
-      position: relative;
-      animation: sway var(--swt, 6s) var(--swd, 0s) ease-in-out infinite alternate;
-      transform-origin: bottom center;
+      100%{ bottom: var(--bottom, 55px); opacity: 1; }
     }
     @keyframes sway {
       0%  { transform: rotate(var(--sr, -3deg)); }
-      100%{ transform: rotate(var(--sl, 3deg)); }
+      100%{ transform: rotate(var(--sl,  3deg)); }
     }
-    .stem-leaf {
-      position: absolute;
-      width: var(--lw, 22px); height: var(--lh, 12px);
-      background: linear-gradient(135deg, #5adba8, #236a44);
-      border-radius: 50% 0 50% 0;
-    }
-    .stem-leaf.r { right: 100%; transform-origin: right center; transform: rotate(-40deg); }
-    .stem-leaf.l { left: 100%; transform-origin: left center; transform: rotate(40deg) scaleX(-1); }
+
+    /* BUNGA */
     .bloom {
-      position: relative; display: flex; align-items: center; justify-content: center;
-      width: var(--bw, 60px); height: var(--bw, 60px); margin: 0 auto;
-      animation: bloomIn 1.4s var(--bd, 1s) cubic-bezier(.34,1.56,.64,1) both;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      width: var(--bw, 56px); height: var(--bw, 56px);
+      flex-shrink: 0;
+      animation: bloomIn 1.2s var(--bd, 1s) cubic-bezier(.34,1.56,.64,1) both;
     }
     @keyframes bloomIn {
-      0%  { transform: scale(0) rotate(-50deg); opacity: 0; }
-      65% { transform: scale(1.2) rotate(8deg); }
-      100%{ transform: scale(1) rotate(0); opacity: 1; }
+      0%  { transform: scale(0) rotate(-45deg); opacity: 0; }
+      60% { transform: scale(1.15) rotate(6deg); }
+      100%{ transform: scale(1) rotate(0deg); opacity: 1; }
     }
     .petal {
       position: absolute;
-      width: var(--pw, 26px); height: var(--ph, 34px);
-      border-radius: 50% 50% 30% 30%;
-      background: var(--pc); opacity: .9;
+      width: var(--pw, 20px); height: var(--ph, 28px);
+      border-radius: 50% 50% 35% 35%;
+      background: var(--pc);
+      opacity: .92;
+      transform-origin: center bottom;
     }
-    .petal:nth-child(1){ transform: rotate(0deg)   translateY(calc(var(--ph,34px)*-.44)); }
-    .petal:nth-child(2){ transform: rotate(72deg)  translateY(calc(var(--ph,34px)*-.44)); }
-    .petal:nth-child(3){ transform: rotate(144deg) translateY(calc(var(--ph,34px)*-.44)); }
-    .petal:nth-child(4){ transform: rotate(216deg) translateY(calc(var(--ph,34px)*-.44)); }
-    .petal:nth-child(5){ transform: rotate(288deg) translateY(calc(var(--ph,34px)*-.44)); }
+    .petal:nth-child(1){ transform: rotate(0deg)   translateY(-45%); }
+    .petal:nth-child(2){ transform: rotate(72deg)  translateY(-45%); }
+    .petal:nth-child(3){ transform: rotate(144deg) translateY(-45%); }
+    .petal:nth-child(4){ transform: rotate(216deg) translateY(-45%); }
+    .petal:nth-child(5){ transform: rotate(288deg) translateY(-45%); }
     .center {
       position: relative; z-index: 2;
-      width: var(--cw, 16px); height: var(--cw, 16px); border-radius: 50%;
-      background: radial-gradient(circle, #fffcd0, #f5c040 55%, #c07810);
-      box-shadow: 0 0 8px 3px rgba(245,185,30,.6);
+      width: var(--cw, 13px); height: var(--cw, 13px);
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffcd0 20%, #f5c040 60%, #c07810);
+      box-shadow: 0 0 7px 3px rgba(245,185,30,.55);
     }
     .ff {
-      position: absolute; width: 4px; height: 4px; border-radius: 50%;
-      background: #ffe566; box-shadow: 0 0 5px 2px rgba(255,220,50,.7);
+      position: absolute; width: 3px; height: 3px; border-radius: 50%;
+      background: #ffe566; box-shadow: 0 0 4px 2px rgba(255,220,50,.65);
       animation: ffblink var(--ft, 2s) var(--fd, 0s) ease-in-out infinite alternate;
     }
     @keyframes ffblink {
-      0%  { opacity: 0; transform: translate(0,0); }
-      100%{ opacity: 1; transform: translate(var(--fx,4px), var(--fy,-6px)); }
+      0%  { opacity: 0; transform: translate(0,0) scale(.5); }
+      100%{ opacity: 1; transform: translate(var(--fx,4px), var(--fy,-5px)) scale(1); }
+    }
+
+    /* BATANG — langsung nyambung di bawah bloom tanpa gap */
+    .stem {
+      width: var(--sw2, 3px);
+      height: var(--sh, 150px);
+      background: linear-gradient(to top, #183820, #42b870);
+      border-radius: 2px 2px 3px 3px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* DAUN */
+    .stem-leaf {
+      position: absolute;
+      width: var(--lw, 16px); height: var(--lh, 8px);
+      background: linear-gradient(135deg, #52cc88, #1e5e34);
+      border-radius: 50% 10% 50% 10%;
+    }
+    .stem-leaf.r {
+      right: calc(100% - 1px);
+      transform-origin: right center;
+      transform: rotate(-35deg);
+    }
+    .stem-leaf.l {
+      left: calc(100% - 1px);
+      transform-origin: left center;
+      transform: rotate(35deg) scaleX(-1);
     }
 
     /* ─── GRASS ─── */
@@ -499,7 +525,6 @@
 
 <div class="title">
   <h1>Happy Birthday, Sayangku 🎂🤍 </h1>
-  <div class="sub">♡</div>
 </div>
 
 <div id="flowerCanvas"></div>
